@@ -1,3 +1,12 @@
+---
+name: "People and Computers: Views from History"
+description: "Uses historical timelines, video, quotations and themes to show how ideas about computers changed."
+categories: [interactive-learning-objects, web-app, built-by-ai]
+updated: 2026-07-16
+deployments:
+  Appsite:
+    "People and Computers: Views from History": https://viewfromhistory.semanticmachines.fyi/
+---
 # People and Computers: History Explorer
 
 ## Overview
