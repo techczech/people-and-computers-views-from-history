@@ -1,0 +1,34 @@
+---
+import Icon from './HistoryIcon.astro';
+import type { QuoteItem } from '../../data/history/history-types';
+interface Props { quotesData: QuoteItem[] }
+const { quotesData } = Astro.props;
+---
+<div class="space-y-12">
+      {quotesData.map((item) => (<div data-filter-item data-search={JSON.stringify([item.videoTitle, ...item.quotes.map(q => q.text)])} class="border-b border-slate-200 pb-8 last:border-0">
+          <div class="flex items-baseline gap-3 mb-4">
+             <h3 class="text-xl font-bold text-slate-800">{item.videoTitle}</h3>
+             <span class="text-sm text-slate-500 font-medium">({item.year})</span>
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            {item.quotes.map((q) => (<div class="bg-white p-5 rounded-lg border border-slate-100 shadow-sm relative group">
+                <Icon name="Quote" class="absolute top-4 left-4 text-blue-100 h-8 w-8 -z-0" />
+                <blockquote class="relative z-10 mb-3 text-slate-700 font-serif leading-relaxed italic">
+                  "{q.text}"
+                </blockquote>
+                <div class="text-right">
+                  <a 
+                    href={q.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="inline-block text-xs font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded hover:bg-blue-100 transition-colors"
+                  >
+                    [{q.timecode}]
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>

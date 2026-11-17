@@ -1,0 +1,33 @@
+---
+import Icon from './HistoryIcon.astro';
+import { copy } from '../../data/history/history-content';
+import type { VideoItem } from '../../data/history/history-types';
+interface Props { videos: VideoItem[] }
+const { videos } = Astro.props;
+---
+<div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {videos.map((video) => (<div data-filter-item data-search={JSON.stringify([video.title, video.description])} class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow flex flex-col">
+          <div class="flex justify-between items-start mb-2">
+            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">{video.year}</span>
+            <a 
+              href={video.link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="text-blue-500 hover:text-blue-700 transition-colors"
+              title={copy.text4}
+            >
+              <Icon name="ExternalLink" size={18} />
+            </a>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-3 leading-tight">{video.title}</h3>
+          <p class="text-slate-600 text-sm flex-grow leading-relaxed mb-4">{video.description}</p>
+          <a 
+            href={video.link} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 self-start mt-auto"
+          >
+            <Icon name="PlayCircle" size={16} />{copy.text3}</a>
+        </div>
+      ))}
+    </div>

@@ -1,0 +1,10 @@
+---
+import HistoryLayout from '../layouts/HistoryLayout.astro';
+import HistoryLanding from '../components/history/HistoryLanding.astro';
+import HistoryBrowser from '../components/history/HistoryBrowser.astro';
+---
+<HistoryLayout>
+  <div data-landing><HistoryLanding /></div>
+  <div data-browser><HistoryBrowser /></div>
+</HistoryLayout>
+<script>import '../scripts/history-browser';</script>

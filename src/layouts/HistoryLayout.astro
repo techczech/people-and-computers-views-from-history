@@ -1,0 +1,23 @@
+---
+import '../styles/history.css';
+import { citationHead } from '../scripts/kit/citation';
+import { historyCitation } from '../data/history/citation';
+import '../styles/history-adjustments.css';
+import { documentTitle } from '../data/history/history-content';
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/x-icon" href="/favicon-people-and-computers-20261028.ico" />
+<link rel="icon" type="image/svg+xml" href="/favicon-people-and-computers-20261028.svg" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-people-and-computers-20261028.png" />
+<title>{documentTitle}</title>
+<meta name="description" content={historyCitation.description} />
+<link rel="canonical" href={historyCitation.url} />
+<Fragment set:html={citationHead(historyCitation)} />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-100 selection:text-blue-900"><slot /><div id="toast" role="status" aria-live="polite"></div></body>
+</html>

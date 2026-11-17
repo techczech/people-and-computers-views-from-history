@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Astro generated types and build cache
+.astro/
+
+# Keep credential-capable npm configuration local; documented commands enforce age.
+.npmrc

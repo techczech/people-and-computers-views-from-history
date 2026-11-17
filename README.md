@@ -14,29 +14,41 @@ An interactive exploration of historical views on the relationship between human
 
 ## Architecture
 
-### Technology Stack
-*   **Frontend Library**: React 19 (via ES Modules)
-*   **Styling**: Tailwind CSS (via CDN)
-*   **Icons**: Lucide React
-*   **Language**: TypeScript (TSX)
+Astro renders the original published experiment as static HTML at `/`. Local CSS preserves the existing utility styles; a small TypeScript module handles the landing/results switch, section navigation, filtering and prompt copying. Summary cards use native collapsed details. There is no React runtime, server adapter or live model request.
 
-### File Structure
-*   **Entry Points**: `index.html` loads `index.tsx`, which mounts the React application.
-*   **Data Layer**: `constants.ts` contains the static dataset (timelines, quotes, summaries) to ensure fast loading and offline capability without a backend.
-*   **Type Definitions**: `types.ts` ensures type safety across the application data structures.
-*   **Components**:
-    *   `App.tsx`: Controls the high-level view state (Landing Page vs. Main Browser).
-    *   `components/MainBrowser.tsx`: Handles the sidebar navigation, search filtering, and section rendering.
-    *   `components/`: Individual display components (`Timeline`, `Themes`, `Summaries`, etc.) receive data via props.
+Authored public copy, prompts, records and summaries are editable in `src/content/history/*.md`, using YAML frontmatter. Typed data loading is in `src/data/history/`, templates in `src/components/history/`, browser behaviour in `src/scripts/history-browser.ts` and local styles in `src/styles/`.
 
-## Deployment Details
-This application is designed to run in a browser environment that supports ES modules and on-the-fly TypeScript compilation (like Google AI Studio's preview environment).
+## Build and verification
 
-### Hosting
-1.  **Static Serving**: The app is client-side only. It can be hosted on any static web server, provided the environment can handle the `.tsx` imports (typically handled by the specific AI Studio build environment).
-2.  **Dependencies**: All dependencies (React, ReactDOM, Lucide) are loaded via the `importmap` in `index.html`, requiring no `npm install` step.
+Use the pinned Node 24.22.1 LTS runtime and npm:
+
+```sh
+npm ci --ignore-scripts --min-release-age=7
+npm run check
+npm run build
+npm run test:output
+npm run preview
+```
+
+Deploy only `dist/`. The build emits one root document and bundled styles/scripts. It does not publish `research/`, read `.env` files or substitute API keys. Hosting and live response headers still require verification against the actual deployment pipeline.
+
+The complete pre-migration public source, content projection, source hashes and existing built output are preserved in `research/retired-history-react-baseline-2026-10-27/`. The later reanalysis in `research/history-rerun-2026-10-22/` remains unpublished and separate.
+
+The checked-in utility CSS was compiled once with Tailwind CSS 3.4.17, using `scripts/history-tailwind.config.cjs`. To regenerate after utility-class changes:
+
+```sh
+npm exec --yes --package=tailwindcss@3.4.17 -- tailwindcss --config scripts/history-tailwind.config.cjs --input src/styles/history-utilities.css --output src/styles/history.css --minify
+```
 
 ## Credits
 *   **Research**: Dominik Lukeš
 *   **AI Model**: Google Gemini 2.5 Pro
 *   **Platform**: Google AI Studio
+
+## Page citations
+
+The Astro layout emits reference-manager metadata at build time using the unchanged
+web-design-elements citation kit in `src/scripts/kit/`. Page citations use the
+published author and publication metadata; undated pages omit dates. Content pages
+have a copyable citation, with tool citations in the existing footer area.
+Run `npm run check:citations` after building to check every owned HTML page.

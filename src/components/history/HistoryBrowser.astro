@@ -1,0 +1,163 @@
+---
+import Citation from "../Citation.astro";
+import { historyCitation } from "../../data/history/citation";
+import Icon from './HistoryIcon.astro';
+import { copy } from '../../data/history/history-content';
+import HistoryTimeline from './HistoryTimeline.astro';
+import HistoryVideoList from './HistoryVideoList.astro';
+import HistoryQuotes from './HistoryQuotes.astro';
+import HistoryMethods from './HistoryMethods.astro';
+import HistoryThemes from './HistoryThemes.astro';
+import HistorySummary from './HistorySummary.astro';
+import { TIMELINE_DATA, VIDEO_LIST, QUOTES_DATA, THEMES_DATA, SUMMARIES_DATA, sections as SECTIONS } from '../../data/history/history-content';
+---
+<div class="min-h-screen flex flex-col md:flex-row bg-slate-50">
+      
+      
+      <div class="md:hidden bg-white border-b border-slate-200 p-4 sticky top-0 z-50 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <button data-back class="p-1 text-slate-500 hover:bg-slate-100 rounded">
+                <Icon name="ArrowLeft" size={20} />
+            </button>
+            <h1 class="text-lg font-bold text-slate-900 truncate pr-4">{copy.text54}</h1>
+        </div>
+        <button data-menu aria-expanded="false" aria-label={copy.menu} class="p-2 text-slate-600">
+          <span data-menu-open><Icon name="Menu" /></span>
+          <span data-menu-close hidden><Icon name="X" /></span>
+        </button>
+      </div>
+
+      
+      <aside data-sidebar class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 transform transition-transform duration-300 ease-in-out md:translate-x-0 md:sticky md:top-0 md:h-screen overflow-y-auto border-r border-slate-800 -translate-x-full">
+        <div class="p-6">
+          <button 
+            data-back
+            class="flex items-center gap-2 text-slate-400 hover:text-white mb-6 text-sm transition-colors group"
+          >
+            <Icon name="ArrowLeft" size={16} class="group-hover:-translate-x-1 transition-transform" />{copy.text55}</button>
+          <h1 class="text-xl font-bold text-white mb-2 leading-tight">{copy.text56}<span class="text-blue-400 block font-normal text-lg">{copy.text57}</span></h1>
+          <p class="text-xs text-slate-500 mt-2">{copy.text58}</p>
+        </div>
+
+        <div class="px-6 mb-6">
+          <div class="relative">
+            <Icon name="Search" class="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+            <input 
+              type="text" 
+              placeholder={copy.text77} 
+              data-search-input aria-label={copy.filter}
+              
+              class="w-full bg-slate-800 text-sm text-white rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder-slate-500"
+            />
+          </div>
+        </div>
+
+        <nav class="px-3 space-y-1 pb-20">
+          {SECTIONS.map((item) => (<button
+              data-nav={item.id}
+              class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg transition-colors hover:bg-slate-800 hover:text-white"
+            >
+              <Icon name={item.icon} size={18} />
+              {item.label}
+            </button>
+          ))}
+        </nav>
+      </aside>
+
+      
+      <main class="flex-1 min-w-0">
+        
+        <div class="max-w-5xl mx-auto px-4 md:px-12 py-12 space-y-24">
+          
+          
+          <section id="methods" class="scroll-mt-24">
+            <div class="mb-8 border-b border-slate-200 pb-4">
+              <h2 class="text-3xl font-bold text-slate-900 flex items-center gap-3">
+                <Icon name="Info" class="text-blue-500" />{copy.text60}</h2>
+            </div>
+            <HistoryMethods />
+          </section>
+
+          
+          <section id="timeline" class="scroll-mt-24">
+            <div class="mb-8 border-b border-slate-200 pb-4 flex justify-between items-end">
+              <h2 class="text-3xl font-bold text-slate-900 flex items-center gap-3">
+                <Icon name="Clock" class="text-blue-500" />{copy.text61}</h2>
+              <button 
+                data-nav="methods-timeline" 
+                class="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
+              >
+                <Icon name="Code" size={14} />{copy.text62}</button>
+            </div>
+            <div data-filter-group><HistoryTimeline events={TIMELINE_DATA} /><div data-empty hidden><p class="text-slate-500 italic">{copy.text63}</p></div></div>
+          </section>
+
+          
+          <section id="videos" class="scroll-mt-24">
+            <div class="mb-8 border-b border-slate-200 pb-4 flex justify-between items-end">
+              <h2 class="text-3xl font-bold text-slate-900 flex items-center gap-3">
+                <Icon name="Video" class="text-blue-500" />{copy.text64}</h2>
+              <button 
+                data-nav="methods-videos" 
+                class="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
+              >
+                <Icon name="Code" size={14} />{copy.text65}</button>
+            </div>
+            <div data-filter-group><HistoryVideoList videos={VIDEO_LIST} /><div data-empty hidden><p class="text-slate-500 italic">{copy.text66}</p></div></div>
+          </section>
+
+          
+          <section id="quotes" class="scroll-mt-24">
+            <div class="mb-8 border-b border-slate-200 pb-4 flex justify-between items-end">
+              <h2 class="text-3xl font-bold text-slate-900 flex items-center gap-3">
+                <Icon name="Quote" class="text-blue-500" />{copy.text67}</h2>
+              <button 
+                data-nav="methods-quotes" 
+                class="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
+              >
+                <Icon name="Code" size={14} />{copy.text68}</button>
+            </div>
+            <div data-filter-group><HistoryQuotes quotesData={QUOTES_DATA} /><div data-empty hidden><p class="text-slate-500 italic">{copy.text69}</p></div></div>
+          </section>
+
+          
+          <section id="themes" class="scroll-mt-24">
+            <div class="mb-8 border-b border-slate-200 pb-4 flex justify-between items-end">
+              <h2 class="text-3xl font-bold text-slate-900 flex items-center gap-3">
+                <Icon name="Layers" class="text-blue-500" />{copy.text70}</h2>
+              <button 
+                data-nav="methods-themes" 
+                class="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
+              >
+                <Icon name="Code" size={14} />{copy.text71}</button>
+            </div>
+            <HistoryThemes themes={THEMES_DATA} />
+          </section>
+
+          
+          <section id="summaries" class="scroll-mt-24 pb-24">
+            <div class="mb-8 border-b border-slate-200 pb-4">
+              <div class="flex justify-between items-end mb-2">
+                 <h2 class="text-3xl font-bold text-slate-900 flex items-center gap-3">
+                  <Icon name="FileText" class="text-blue-500" />{copy.text72}</h2>
+                <button 
+                  data-nav="methods-summaries" 
+                  class="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
+                >
+                  <Icon name="Code" size={14} />{copy.text73}</button>
+              </div>
+              <p class="text-slate-500 mt-2">{copy.text74}</p>
+            </div>
+            <div data-filter-group>{SUMMARIES_DATA.map(summary => <HistorySummary summary={summary} />)}</div>
+          </section>
+
+        </div>
+        
+        
+        <footer class="bg-slate-900 text-slate-400 py-12 px-4 text-center">
+          <Citation page={historyCitation} />
+          <p class="mb-2">{copy.text75}</p>
+          <p class="text-sm">{copy.text76}</p>
+        </footer>
+      </main>
+    </div>

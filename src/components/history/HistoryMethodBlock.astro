@@ -1,0 +1,29 @@
+---
+import Icon from './HistoryIcon.astro';
+import { copy } from '../../data/history/history-content';
+import HistoryPrompt from './HistoryPrompt.astro';
+interface Props { id:string; title:string; prompts:{label:string;text:string}[]; note?:string }
+const {id, title, prompts, note} = Astro.props;
+---
+<section id={`method-${id}`} class="scroll-mt-32 border-b border-slate-200 pb-12 last:border-0 last:pb-0">
+    <div class="flex items-center gap-4 mb-6">
+      <h3 class="text-2xl font-bold text-slate-900">{title}</h3>
+      <button 
+        data-nav={id}
+        class="flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline bg-blue-50 px-3 py-1 rounded-full transition-colors"
+      >
+        <Icon name="LinkIcon" size={14} />{copy.text31}</button>
+    </div>
+    
+    {note && (
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-md mb-8 flex gap-3 text-slate-700 text-sm">
+        <Icon name="Info" class="flex-shrink-0 text-yellow-500 mt-0.5" size={18} />
+        <p>{note}</p>
+      </div>
+    )}
+
+    <div class="space-y-4">
+      {prompts.map((p) => (<HistoryPrompt label={p.label} text={p.text} />
+      ))}
+    </div>
+  </section>
